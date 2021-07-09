@@ -1,3 +1,4 @@
-flask
+-f https://download.pytorch.org/whl/torch_stable.html
+flask==2.0.1
 torch==1.8.0+cpu 
 torchvision==0.9.1+cpu
