@@ -1,29 +1,28 @@
 from flask import Flask, request, jsonify, render_template
 from werkzeug.utils import secure_filename
-from flask_wtf.file import FileField
-from flask_wtf import FlaskForm
 from predict.prediction import get_prediction
 from PIL import Image
-import os
 
-app = Flask(__name__)
+myapp = Flask(__name__)
 
 
-@app.route('/')
+@myapp.route('/')
 def hello():
     return render_template('index.html')
 
-@app.route('/submit', methods=['POST'])
-
+@myapp.route('/submit', methods=['POST'])
 def predict():
     try:
         if request.method == "POST":
             file = request.files['file']
-            print(file)
+            # print(file)
             file.save("./static/images/" + secure_filename(file.filename))
+            # file.save("./static/images/img" + secure_filename(file.filename).split(".")[1])
+            # save_path = "./static/images/img" + secure_filename(file.filename).split(".")[1]
             save_path = "./static/images/" + secure_filename(file.filename)
             image = Image.open(save_path)
             class_id, class_name = get_prediction(image=image)
+            print(class_id, "abc")
             # return jsonify({'class_id': class_id, 'class_name': class_name})
             return render_template('index.html',message = class_name, user_image=save_path)
     except:
@@ -42,4 +41,4 @@ def predict():
 #         return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run()
+    myapp.run()

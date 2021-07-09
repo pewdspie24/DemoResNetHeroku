@@ -7,5 +7,5 @@
 import requests
 
 resp = requests.post("http://localhost:5000/submit",
-                     files={"file": open('./images/Domestic-feline-tabby-cat.jpg','rb')})
-# print(resp.json())
+                     files={"file": open('./static/images/apples1.jpg','rb')})
+print(resp.json())
